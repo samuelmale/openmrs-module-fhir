@@ -12,13 +12,15 @@
 package org.openmrs.module.fhir.api;
 
 import org.junit.Test;
+import org.openmrs.Encounter;
 import org.openmrs.api.context.Context;
 import org.openmrs.module.fhir.api.diagnosticreport.DiagnosticReportHandler;
 import org.openmrs.test.BaseModuleContextSensitiveTest;
 import org.openmrs.test.Verifies;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertNotNull;
+import static org.junit.Assert.*;
+
+import org.hl7.fhir.dstu3.model.DiagnosticReport;
 
 public class DiagnosticReportServiceTest extends BaseModuleContextSensitiveTest {
 
@@ -51,6 +53,15 @@ public class DiagnosticReportServiceTest extends BaseModuleContextSensitiveTest 
 		DiagnosticReportHandler radiologyHandler = service.getHandler("RAD");
 		assertNotNull(radiologyHandler);
 		assertEquals("RAD", radiologyHandler.getServiceCategory());
+	}
+	
+	@Test
+	public void getDiagnosticReport_shouldReturnDiagnosticReport() throws Exception {
+		executeDataSet("LaboratoryHandler_initialData.xml");
+		DiagnosticReportService service = getService();
+		DiagnosticReport report = service.getDiagnosticReport("6bdec581-23aa-45fd-b578-413897aa6e8a");
+		assertNotNull(report);
+
 	}
 
 }

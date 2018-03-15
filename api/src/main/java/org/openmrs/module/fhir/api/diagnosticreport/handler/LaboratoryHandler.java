@@ -12,6 +12,7 @@ import org.hl7.fhir.dstu3.model.DiagnosticReport;
 import org.hl7.fhir.dstu3.model.IdType;
 import org.hl7.fhir.dstu3.model.Identifier;
 import org.hl7.fhir.dstu3.model.Observation;
+import org.hl7.fhir.dstu3.model.Patient;
 import org.hl7.fhir.dstu3.model.Reference;
 import org.openmrs.Concept;
 import org.openmrs.ConceptComplex;
@@ -69,20 +70,25 @@ public class LaboratoryHandler extends AbstractHandler implements DiagnosticRepo
 
 		// Separate Obs into different field based on Concept Id
 		Map<String, Set<Obs>> obsSetsMap = separateObs(omrsDiagnosticReport.getObsAtTopLevel(false));
+		
 
 		// Set ID
 		diagnosticReport.setId(new IdType("DiagnosticReport", omrsDiagnosticReport.getUuid()));
 
 		// Get Obs and set as `Name`
 		// Get Obs and set as `Status`
-
+		
 		// @required: Get EncounterDateTime and set as `Issued` date
 		diagnosticReport.setIssued(omrsDiagnosticReport.getEncounterDatetime());
-
+		
 		// @required: Get Encounter Patient and set as `Subject`
 		org.openmrs.Patient omrsPatient = omrsDiagnosticReport.getPatient();
-		diagnosticReport.getSubject().setResource(FHIRPatientUtil.generatePatient(omrsPatient));
-
+		//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+		Patient patient= FHIRPatientUtil.generatePatient(omrsPatient);
+        
+		diagnosticReport.getSubject().setResource(patient);
+		//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+		
 		// Get Encounter Provider and set as `Performer`
 		EncounterRole omrsEncounterRole = FHIRUtils.getEncounterRole();
 		Set<Provider> omrsProviderList = omrsDiagnosticReport.getProvidersByRole(omrsEncounterRole);
@@ -110,7 +116,7 @@ public class LaboratoryHandler extends AbstractHandler implements DiagnosticRepo
 
 		// Get valueDateTime in Obs and Set `Diagnosis[x]->DateTime`
 		// Get valueDateTime in Obs and Set `Diagnosis[x]->Period`
-
+        
 		// ObsSet set as `Result`
 		List<Reference> resultReferenceDtList = new ArrayList<Reference>();
 		for (Obs resultObs : obsSetsMap.get(FHIRConstants.DIAGNOSTIC_REPORT_RESULT)) {
@@ -133,7 +139,7 @@ public class LaboratoryHandler extends AbstractHandler implements DiagnosticRepo
 		if (!attachmentDtList.isEmpty()) {
 			diagnosticReport.setPresentedForm(attachmentDtList);
 		}
-
+			
 		return diagnosticReport;
 	}
 
@@ -143,7 +149,7 @@ public class LaboratoryHandler extends AbstractHandler implements DiagnosticRepo
 		obsSetsMap.put(FHIRConstants.DIAGNOSTIC_REPORT_STATUS, new HashSet<Obs>());
 		obsSetsMap.put(FHIRConstants.DIAGNOSTIC_REPORT_RESULT, new HashSet<Obs>());
 		obsSetsMap.put(FHIRConstants.DIAGNOSTIC_REPORT_PRESENTED_FORM, new HashSet<Obs>());
-
+		
 		for (Obs obs : obsSet) {
 			try {
 				obsSetsMap.get(getFieldName(obs.getConcept())).add(obs);

@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+  The contents of this file are subject to the OpenMRS Public License
+  Version 1.0 (the "License"); you may not use this file except in
+  compliance with the License. You may obtain a copy of the License at
+  http://license.openmrs.org
+
+  Software distributed under the License is distributed on an "AS IS"
+  basis, WITHOUT WARRANTY OF ANY KIND, either express or implied. See the
+  License for the specific language governing rights and limitations
+  under the License.
+
+  Copyright (C) OpenMRS, LLC.  All Rights Reserved.
+  -->
+  <dataset>
+    <concept concept_id="1" retired="false" datatype_id="1" class_id="11" is_set="false" creator="1" date_created="2004-08-12 00:00:00.0" 
+                            version="" uuid="19ee3170-68ab-4444-bd76-0810271c1b76"/>               
+    <concept_name concept_id="1" name="Body Weght" locale="en_GB" creator="1" date_created="2015-01-16 13:52:53.0" 
+                            concept_name_id="1" concept_name_type="SHORT" locale_preferred="0" voided="false" uuid="ef7ac658-3136-443c-2924-4617aa537659"/>                
+    <concept_datatype concept_datatype_id="1" name="Numeric" hl7_abbreviation="NM" description="Numeric value, including integer or float"
+                            creator="1" date_created="2005-01-01 00:00:00.0" retired="false" uuid="07ab5f37-4f18-4932-a0b5-16de3811789a"/>
+    
+    <person person_id="1001" dead="false" creator="1" date_created="2005-01-01 00:00:00.0" voided="false" gender="F"  uuid="2fffba52-dfef-4c09-97e1-c987f5e64f745"/>
+    <person_name person_id="1001" person_name_id="3" preferred="1" creator="1" date_created="2005-01-01 00:00:00.0" voided="false"
+                            given_name="John3" middle_name=" " family_name="Doe"  uuid="d9999a3e-0ed8-4c45-b1db-7969a37c88be"/>
+    
+    <provider provider_id="2" name="physician" identifier="1" creator="1" date_created="2005-01-01 00:00:00.0" retired="false" uuid="c2299865c-cca9-11e0-9572-0800200c9a690" />
+    
+    <encounter_role encounter_role_id="2" name = "attending physician" description = "The person in charge" creator="1" date_created="2005-01-01 00:00:00.0" 
+                            retired = "false" uuid="430bbb84-6a9c-4e1e-badb-jgu6888bbjkn6"/>
+                       
+    <patient patient_id="1001" creator="1" date_created="2005-01-01 00:00:00.0" voided="false"/>
+    <patient_identifier patient_identifier_id="4" patient_id="1001" identifier="12345" identifier_type="1" preferred="1" location_id="1"
+                            creator="1" date_created="2005-01-01 00:00:00.0" voided="false" uuid="cf62c4b2-39d2-4c8e-befa-630f9387ag754"/>
+     <patient_identifier_type patient_identifier_type_id="1" name="Test Identifier Type" description="Test description" creator="1" date_created="2005-01-01 00:00:00.0" 
+                            required="false" retired="false" uuid="d6b27c63-3984-4fba-b683-1b0126a8e370"/>
+                                                    
+    <encounter_type encounter_type_id="73" name="LAB" description="Laboratory Diagnosis Encounter" creator="1" date_created="2005-01-01 00:00:00.0" retired="false" 
+                            uuid="c0c579b0-8e59-401d-8a4a-jhg1997"/>    
+    <encounter encounter_id="1" encounter_type="73"  encounter_datetime="2005-01-01 00:00:00.0" patient_id="1001" location_id="1" creator="1" 
+                            date_created="2005-01-01 00:00:00.0" voided="0" uuid="6bdec581-23aa-45fd-b578-413897aa6e8a"/>                                             
+    <encounter_provider encounter_provider_id="100" encounter_id="1" provider_id="2" encounter_role_id="2" creator="1" date_created="2006-03-11 15:57:35.0" 
+                            voided="false" uuid="1596c524-013f-40f2-aa49-c993f0acab4d" />
+                            
+                             
+    <obs obs_id="100" status="FINAL" person_id="1001" encounter_id="1" concept_id="1" obs_datetime="2005-01-01 00:00:00.0" location_id="1"
+                            creator="1" date_created="2006-02-10 15:57:35.0" voided="false" uuid="4bf4d001-65e3-4203-ba87-6b1ahgfh754"/>
+                                                      
+                                     <!-- define Metadata for FHIR Module -->
+    <global_property property="fhir.diagnosticreport.result" property_value="1" uuid="a3209d7c-ae4c-41a4-96de-876fbhj1886"/>
+    <global_property property="fhir.encounter.encounterRoleUuid" property_value="430bbb84-6a9c-4e1e-badb-jgu6888bbjkn6" uuid="a3209d7c-ae4c-41a4-96de-jg18657bhh8"/>  
+                                   
+  </dataset>

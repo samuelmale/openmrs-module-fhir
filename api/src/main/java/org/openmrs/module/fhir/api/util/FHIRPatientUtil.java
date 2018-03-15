@@ -60,7 +60,7 @@ public class FHIRPatientUtil {
 						.getName()).setValue(identifier.getIdentifier());
 			}
 		}
-
+		
 		//Set patient name to fhir patient
 		List<HumanName> humanNameDts = new ArrayList<HumanName>();
 		for (PersonName name : omrsPatient.getNames()) {
@@ -76,7 +76,7 @@ public class FHIRPatientUtil {
 		} else {
 			patient.setGender(Enumerations.AdministrativeGender.UNKNOWN);
 		}
-
+		
 		List<Address> fhirAddresses = patient.getAddress();
 		for (PersonAddress address : omrsPatient.getAddresses()) {
 			fhirAddresses.add(FHIRUtils.buildAddress(address));
@@ -96,7 +96,7 @@ public class FHIRPatientUtil {
 			isDeceased.setValue(omrsPatient.getDead());
 			patient.setDeceased(isDeceased);
 		}
-
+		
 		List<ContactPoint> dts = new ArrayList<ContactPoint>();
 		// Add global property for telephone / email address. These properties will be used to identify the name of the
 		// person attribute (if any) being used to store a phone number and/or email.
@@ -108,6 +108,7 @@ public class FHIRPatientUtil {
 		}
 		patient.setTelecom(dts);
 		FHIRUtils.validate(patient);
+		
 		return patient;
 	}
 	

@@ -28,6 +28,7 @@ import org.hl7.fhir.dstu3.model.Identifier;
 import org.hl7.fhir.dstu3.model.Reference;
 import org.hl7.fhir.dstu3.model.Resource;
 import org.hl7.fhir.dstu3.model.StringType;
+import org.hl7.fhir.instance.model.api.IBaseResource;
 import org.openmrs.Concept;
 import org.openmrs.ConceptMap;
 import org.openmrs.EncounterRole;
@@ -72,11 +73,14 @@ public class FHIRUtils {
 	}
 
 	public static void validate(Resource resource) {
-		ValidationResult result = val.validateWithResult(resource);
+		IBaseResource res = resource;
+		//////////////////////////////////////////////////////////////////////////////////////////////////////////////
+		ValidationResult result = val.validateWithResult(res);
+		//////////////////////////////////////////////////////////////////////////////////////////////////////////////
 		if (!result.isSuccessful()) {
 			throw new UnprocessableEntityException(ctx.newXmlParser().setPrettyPrint(true).encodeResourceToString(result
 					.getOperationOutcome()));
-		}
+		} 
 	}
 
 	public static String buildURN(String type, String value) {
@@ -447,8 +451,10 @@ public class FHIRUtils {
 	}
 
 	private static Concept getConceptByConceptId(String globalPropertyName) {
+		Concept concept = null;
 		String globalProperty = Context.getAdministrationService().getGlobalProperty(globalPropertyName);
-		Concept concept = Context.getConceptService().getConcept(Integer.parseInt(globalProperty));
+		 concept = Context.getConceptService().getConcept(Integer.parseInt(globalProperty));
+		
 		if (concept == null) {
 			throw new IllegalStateException("Configuration required: " + globalPropertyName);
 		}
